@@ -33,10 +33,10 @@ export const Cart: React.FC = () => {
             return (
                 <tr key={id} data-testid={id}>
                     <th className={bem('Index')} scope="row">{index + 1}</th>
-                    <td className={bem('Name')}>{item.name}</td>
-                    <td className={bem('Price')}>${item.price}</td>
-                    <td className={bem('Count')}>{item.count}</td>
-                    <td className={bem('Total')}>${item.count * item.price}</td>
+                    <td className={bem('Name')} data-testid="cart-name">{item.name}</td>
+                    <td className={bem('Price')} data-testid="cart-price">${item.price}</td>
+                    <td className={bem('Count')} data-testid="cart-count">{item.count}</td>
+                    <td className={bem('Total')} data-testid="cart-sum">${item.count * item.price}</td>
                 </tr>
             );
         });
@@ -60,7 +60,7 @@ export const Cart: React.FC = () => {
                 <tfoot>
                     <tr>
                         <td colSpan={4}>Order price:</td>
-                        <td className={bem('OrderPrice')}>${total}</td>
+                        <td className={bem('OrderPrice')} data-testid="cart-total">${total}</td>
                     </tr>
                 </tfoot>
             </table>
