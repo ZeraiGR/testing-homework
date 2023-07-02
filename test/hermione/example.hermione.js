@@ -1,5 +1,4 @@
-const { assert } = require('chai');
-import { el } from '../getByTestIdHelper';
+const { el } = require('../getByTestIdHelper.js');
 
 const BUG_ID = process.env.BUG_ID ? `?bug_id=${process.env.BUG_ID}` : "";
 const baseurl = 'http://localhost:3000/hw/store';
@@ -25,7 +24,7 @@ describe('Общие требования', function() {
       await this.browser.assertView('mobile', 'body');
     });
 
-    it.only('Для каждого товара в каталоге отображается название, ' +
+    it('Для каждого товара в каталоге отображается название, ' +
         'цена и ссылка на страницу с подробной информацией о товаре', async function () {
       await this.browser.url(getUrl('catalog'));
 
@@ -48,26 +47,60 @@ describe('Общие требования', function() {
       expect(linkText).not.toHaveLength(0);
     });
 
-    // it.only('Вёрстка должна адаптироваться под ширину экрана- каталог', async function () {
-    //     const mock = await this.browser.mock('http://localhost/hw/store/catalog', {
-    //         method: 'get'
-    //     });
-    //
-    //     mock.respond([
-    //         { "id": 0, "name": "Unbranded Shoes", "price": 70 },
-    //         { "id": 1, "name": "Incredible Pizza", "price": 532 },
-    //         { "id": 2, "name": "Rustic Car", "price": 313 },
-    //         { "id": 4, "name": "Generic Pizza", "price": 665 }
-    //     ], {
-    //         statusCode: 200,
-    //         fetchResponse: false
-    //     });
-    //
-    //     await this.browser.url(getUrl('catalog'));
-    //     await this.browser.assertView('catalog-desktop', 'body');
-    //     await this.browser.setWindowSize(475, 1080);
-    //     await this.browser.assertView('catalog-mobile', 'body');
-    // });
+    it('Вёрстка должна адаптироваться под ширину экрана - каталог', async function () {
+        const mock = await this.browser.mock('http://localhost:3000/hw/store/api/products', {
+            method: 'get'
+        });
+    
+        mock.respondOnce([
+            { "id": 0, "name": "Unbranded Shoes", "price": 70 },
+            { "id": 1, "name": "Incredible Pizza", "price": 532 },
+            { "id": 2, "name": "Rustic Car", "price": 313 },
+            { "id": 4, "name": "Generic Pizza", "price": 665 }
+        ], {
+            statusCode: 200,
+        });
+    
+        await this.browser.url(getUrl('catalog'));
+        await this.browser.assertView('catalog-desktop', 'body');
+        await this.browser.setWindowSize(475, 800);
+        await this.browser.assertView('catalog-mobile', 'body');
+    });
+
+    it('Вёрстка должна адаптироваться под ширину экрана - страница товара', async function () {
+        const mock = await this.browser.mock('http://localhost:3000/hw/store/api/products/0', {
+            method: 'get'
+        });
+    
+        mock.respondOnce({
+              "id": 0,
+              "name": "Unbranded Shoes",
+              "description": "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
+              "price": 70,
+              "color": "lime",
+              "material": "Fresh"
+          }, {
+            statusCode: 200,
+        });
+    
+        await this.browser.url(getUrl('catalog/0'));
+        await this.browser.assertView('catalog-desktop', 'body');
+        await this.browser.setWindowSize(475, 1080);
+        await this.browser.assertView('catalog-mobile', 'body');
+    });
+
+    it.only('Вёрстка должна адаптироваться под ширину экрана - рандомная страница товара', async function () {
+        await this.browser.url(getUrl('catalog/1'));
+        await this.browser.assertView('catalog-desktop', 'body', {
+          ignoreElements: [
+            '.ProductDetails-Name',
+            '.ProductDetails-Description',
+            '.ProductDetails-Price',
+            '.ProductDetails-Color',
+            '.ProductDetails-Material'
+          ]
+        });
+    });
 
     it('Вёрстка должна адаптироваться под ширину экрана - доставка', async function () {
       await this.browser.url(getUrl('delivery'));
