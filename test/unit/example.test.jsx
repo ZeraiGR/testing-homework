@@ -390,4 +390,36 @@ describe('Общие требования', () => {
         expect(links).toHaveLength(2);
         expect(links[1]).toHaveAttribute('href', '/catalog');
     });
+
+    // it.only('...', async () => {
+    //     const user = userEvent.setup();
+    //     const api = new ExampleApi(basename);
+    //     const cart = new FakeCartApi();
+
+    //     const store = initStore(api, cart);
+
+    //     const application = (
+    //         <MemoryRouter initialEntries={["/cart"]} initialIndex={0}>
+    //             <Provider store={store}>
+    //                 <Application />
+    //             </Provider>
+    //         </MemoryRouter>
+    //     );
+
+    //     const { findByText, findByTestId } = render(application);
+
+        
+    //     const nameInput = await findByTestId('input-name');
+    //     const phoneInput = await findByTestId('input-phone');
+    //     const addressInput = await findByTestId('input-address');
+
+    //     await user.type(nameInput, "Kirill");
+    //     await user.type(phoneInput, "7777777777777");
+    //     await user.type(addressInput, "Ulica Pushkina 228");
+
+    //     // expect(noticeable).toBeInTheDocument();
+    //     // expect(links).toHaveLength(2);
+    //     // expect(links[1]).toHaveAttribute('href', '/catalog');
+    //     screen.logTestingPlaygroundURL();
+    // });
 });

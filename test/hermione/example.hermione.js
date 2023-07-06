@@ -89,7 +89,7 @@ describe('Общие требования', function() {
         await this.browser.assertView('catalog-mobile', 'body');
     });
 
-    it.only('Вёрстка должна адаптироваться под ширину экрана - рандомная страница товара', async function () {
+    it('Вёрстка должна адаптироваться под ширину экрана - рандомная страница товара', async function () {
         await this.browser.url(getUrl('catalog/1'));
         await this.browser.assertView('catalog-desktop', 'body', {
           ignoreElements: [
@@ -116,30 +116,30 @@ describe('Общие требования', function() {
       await this.browser.assertView('mobile', 'body');
     });
 
-    it('Вёрстка должна адаптироваться под ширину экрана - пустая корзина', async function () {
-      await this.browser.url(getUrl('cart'));
-      await this.browser.assertView('desktope', 'body');
-      await this.browser.setWindowSize(475, 1080);
-      await this.browser.assertView('mobile', 'body');
-    });
+    // it('...', async function () {
+    //     await this.browser.url(getUrl('cart'));
+    //     await this.browser.assertView('desktope', 'body');
+    //     await this.browser.setWindowSize(475, 1080);
+    //     await this.browser.assertView('mobile', 'body');
+    //   });
+
+    //   it.only("должен появиться на странице", async ({ browser }) => {
+    //     const puppeteer = await browser.getPuppeteer();
+    //     const [page] = await puppeteer.pages();
+
+    //     const cart = {
+    //       key: "example-store-cart",
+    //       data: {"0": {"name": "Incredible Fish", "price": 445, "count": 1}}
+    //     };
+
+    //     await page.goto(getUrl());
+
+    //     await page.evaluate(cart => {
+    //       window.localStorage.setItem(cart.key, JSON.stringify(cart.data))
+    //     }, cart);
+
+    //     await page.goto(getUrl("/cart"));
+
+    //     await this.browser.assertView('desktope', 'body');
+    // });
 });
-
-// describe("Конвертер валют", () => {
-
-//   it("должен появиться на странице", async ({ browser }) => {
-//     const puppeteer = await browser.getPuppeteer();
-//     const [page] = await puppeteer.pages(); // нам нужна первая вкладка
-
-//     await page.goto("https://ya.ru"); // переходим на данный урл во вкладке
-//     await page.keyboard.type("курс доллара к рублю"); // в элемент, который в фокусе мы вводим текст
-//     await page.keyboard.press("Enter"); // нажимаем enter
-
-//     await page.waitForSelector(".Converter", { timeout: 5000 });
-//     await browser.assertView("plain", ".Converter", {
-//       ignoreElements: [
-//          css selectors
-//       ]
-//     })
-//   });
-
-// });
